@@ -21,7 +21,8 @@ permutation saferSB{
 
 int main()
 {
-	experiment(saferSB, 8);
+	auto data = experiment(saferSB, 8);
+	distribution(data, 8);
 	std::cout << "done" << std::endl;
 	std::cin.get();
 	std::cin.get();

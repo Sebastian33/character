@@ -1,11 +1,13 @@
 #pragma once
 #include <complex>
 #include <vector>
-//TODO: make as a class
+
 using u64 = unsigned long long;
 using permutation = std::vector<unsigned long long>;
 using cmplx = std::complex<double>;
+using table = std::vector<std::vector<double>>;
 
 double LinPotential(const permutation &prm, u64 a, u64 b, unsigned n);
 permutation generatePermutation(unsigned n);
-void experiment(const permutation &prm, unsigned n);
+table experiment(const permutation &prm, unsigned n);
+void distribution(const table &data, unsigned n);

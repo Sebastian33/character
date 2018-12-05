@@ -35,18 +35,18 @@ permutation generatePermutation(unsigned n)
 	return prm;
 }
 
-void experiment(const permutation &prm, unsigned n)
+table experiment(const permutation &prm, unsigned n)
 {
 	const int size(1 << n);
 	const int mod(size - 1);
 	const double pi = std::acos(-1);
 	cmplx sum(0, 0);
 	const cmplx e = std::exp(cmplx(0, 1) * pi * 2.0 / (double)size);
-	std::vector<std::vector<double>> data(size, std::vector<double>(size, 0));
+	table data(size, std::vector<double>(size, 0));
 
-	for (int a = 1; a < size; a++)
+	for (unsigned a = 1; a < size; a++)
 	{
-		for (int b = 1; b < size; b++)
+		for (unsigned b = 1; b < size; b++)
 		{
 			for (unsigned x = 0; x < size; x++)
 			{
@@ -70,9 +70,37 @@ void experiment(const permutation &prm, unsigned n)
 		out << a << ' ';
 		for (int b = 1; b < size; b++)
 		{
-			out << data[a - 1][b - 1] << ' ';
+			out << data[a-1][b-1] << ' ';
 		}
 		out << std::endl;
 	}
+	out.close();
+	return data;
+}
+
+void distribution(const table &data, unsigned n)
+{
+	const int size(1 << 2*n);
+	int precision(20);
+	std::vector<int> dstrb(size / precision, 0);
+
+	int j;
+	int end(2000);
+	dstrb[0] = 0;
+	for (int i = precision; i < end; i+=precision)
+	{
+		j = i / precision;
+		for (auto column : data)
+		{
+			for (auto cell : column)
+			{
+				dstrb[j] += static_cast<int>(cell < i);
+			}
+		}
+	}
+
+	std::ofstream out("distribution.txt");
+	for (auto d : dstrb)
+		out << d << ' ';
 	out.close();
 }
