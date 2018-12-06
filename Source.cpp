@@ -80,9 +80,10 @@ table experiment(const permutation &prm, unsigned n)
 
 void distribution(const table &data, unsigned n)
 {
-	const int size(1 << 2*n);
+	const int absval(1 << 2*n);
+	const int size(1 << n);
 	int precision(20);
-	std::vector<int> dstrb(size / precision, 0);
+	std::vector<int> dstrb(absval / precision, 0);
 
 	int j;
 	int end(2000);
@@ -90,11 +91,11 @@ void distribution(const table &data, unsigned n)
 	for (int i = precision; i < end; i+=precision)
 	{
 		j = i / precision;
-		for (auto column : data)
+		for (int r = 1; r < size; r++)
 		{
-			for (auto cell : column)
+			for (int c = 1; c < size; c++)
 			{
-				dstrb[j] += static_cast<int>(cell < i);
+				dstrb[j] += static_cast<int>(data[r][c] < i);
 			}
 		}
 	}
