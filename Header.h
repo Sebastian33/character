@@ -11,3 +11,5 @@ double LinPotential(const permutation &prm, u64 a, u64 b, unsigned n);
 permutation generatePermutation(unsigned n);
 table experiment(const permutation &prm, unsigned n);
 void distribution(const table &data, unsigned n);
+double parkTheorem(const table &potentials, unsigned n, unsigned brnchIndx);
+table fromFile(unsigned n);
